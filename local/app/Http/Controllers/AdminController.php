@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use DB;
 use App\Stories;
+use App\Terms;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -36,12 +37,17 @@ class AdminController extends Controller
             {
                 return $this->liststories();
             }
+            else if($_GET['action'] == 'addstory')
+            {
+                return $this->addstory();
+            }
                
         }
         else
         {
             return $this->liststories();
         }
+        
     }
     public function liststories()
     {
@@ -64,5 +70,11 @@ class AdminController extends Controller
               
         }
         return view('admin/story/allstory')->with("articleshtml", $html);
+    }
+
+    public function addstory()
+    {
+        $html = Terms::AllCategoriesHTML();
+        return view('admin/story/addstory')->with("html", $html);
     }
 }

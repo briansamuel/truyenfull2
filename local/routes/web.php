@@ -18,3 +18,4 @@ Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/story','AdminController@storiesAction');
+Route::post('/admin/story','StoryController@store');
