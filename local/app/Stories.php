@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Stories extends Model
@@ -16,4 +16,9 @@ class Stories extends Model
         'story_keyword',
        	
     ];
+    public static function getStorybyId($id)
+    {
+    	$story = DB::table('stories')->where('id', $id)->get();
+    	return $story;
+    }
 }

@@ -41,6 +41,14 @@ class AdminController extends Controller
             {
                 return $this->addstory();
             }
+            else if($_GET['action'] == 'editstory')
+            {
+                if(isset($_GET['story_id']))
+                {
+                     return $this->editstory($_GET['story_id']);
+                }
+               
+            }
                
         }
         else
@@ -60,7 +68,7 @@ class AdminController extends Controller
                 <input data-check="'.$story->id.'" type="checkbox" name="remember">
                 </th>
                 <td>'.$story->id.'</td>
-                <td>'.$story->story_title.'</td>
+                <td><a href="admin/story?action=editstory&story_id='.$story->id.'">'.$story->story_title.'</a></td>
                 <td>'.$story->story_excerpt.'</td>
                 <td></td>
                 <td></td>
@@ -76,5 +84,16 @@ class AdminController extends Controller
     {
         $html = Terms::AllCategoriesHTML();
         return view('admin/story/addstory')->with("html", $html);
+    }
+    public function editstory($id)
+    {
+        $html = Terms::AllCategoriesHTML();
+        $story = Stories::getStorybyId($id)->first();
+        $data = array(
+            'story'  => $story,
+            'html'   => $html,
+        );
+
+        return view('admin/story/editstory')->with($data);
     }
 }

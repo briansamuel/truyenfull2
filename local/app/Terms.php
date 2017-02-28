@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Terms extends Model
 {
     //
+    protected $table = 'terms';
+
+    protected $fillable = [
+        
+       	
+    ];
+
     public static function AllCategoriesHTML()
     {
         $html = '<ul id="listCategorieshmtl">';
@@ -16,7 +23,7 @@ class Terms extends Model
                     <label>
                     <input name="categories[]" type="checkbox" id="'.$category->term_id.'" value="'.$category->term_id.'" > '.$category->term_name.'
                     </label>';
-            $subcategories = DB::table('term_taxonomy')->where('taxonomy', 'category')->where('parent', $category->term_id)->get();
+            $subcategories = DB::table('terms')->where('term_type', 'category')->where('term_parent', $category->term_id)->get();
             $html .= '<ul id="sublistCategorieshmtl">';
             foreach ($subcategories as $subcategory) {
                 $html .= '<li>
