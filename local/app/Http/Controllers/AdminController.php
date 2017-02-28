@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use DB;
+use App\Stories;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,6 +12,7 @@ class AdminController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,6 +27,42 @@ class AdminController extends Controller
     {
         return view('admin/content');
     }
-
-
+    public function storiesAction()
+    {
+        if(isset($_GET['action']))
+        {
+            
+            if($_GET['action'] == 'allstory')
+            {
+                return $this->liststories();
+            }
+               
+        }
+        else
+        {
+            return $this->liststories();
+        }
+    }
+    public function liststories()
+    {
+        $html = '';
+        $stories = Stories::orderBy('created_at', 'desc')->get();
+        foreach ($stories as $story) {
+            //$categoriesHTML = Categories::getCategoriesbyID($article->id);
+            $html .= '<tr>
+                <th>
+                <input data-check="'.$story->id.'" type="checkbox" name="remember">
+                </th>
+                <td>'.$story->id.'</td>
+                <td>'.$story->story_title.'</td>
+                <td>'.$story->story_excerpt.'</td>
+                <td></td>
+                <td></td>
+                <td>'.$story->created_at->format('d/m/Y').'</td>
+                                  
+             </tr>';
+              
+        }
+        return view('admin/story/allstory')->with("articleshtml", $html);
+    }
 }
