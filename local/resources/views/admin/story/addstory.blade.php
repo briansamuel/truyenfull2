@@ -33,7 +33,9 @@
                     <!-- /.box-header -->
                     <div class="box-body pad">
                       <div class="form-group">
-                        <textarea name="story_excerpt" class="form-control" rows="3" placeholder="Mô tả"></textarea>
+                        
+                        <textarea id="story_excerpt" name="story_excerpt" class="form-control" rows="3" placeholder="Mô tả"></textarea>
+
                       </div>
                       
                       
@@ -42,10 +44,10 @@
                       <br>
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <button type="button" class="btn btn-info btn-flat">Thumbnail</button>
+                          <button type="button" id="thumbnail" class="btn btn-info btn-flat">Thumbnail</button>
                         </div>
                         <!-- /btn-group -->
-                        <input name="story_thumbnail" type="text" class="form-control">
+                        <input  id="xFilePath" name="story_thumbnail" type="text" class="form-control">
                       </div>
                       <br>
                       <div class="input-group">
@@ -92,6 +94,7 @@
     </section>
     <!-- /.content -->
 </div>
+
 <!-- /.content-wrapper -->
 @if ( $errors->any() )
 <div class="example-modal">
@@ -137,17 +140,36 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- CK Editor -->
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+
+<script src="plugins/ckfinder/ckfinder.js"></script>
 <script>
   $(function () {
 
+    
     $('#myModal').modal();
   });
 </script>
 <script src="plugins/iCheck/icheck.min.js"></script>
-<script>
+<script type="text/javascript" >
+  function openPopup() {
+             CKFinder.popup( {
+                 chooseFiles: true,
+                 onInit: function( finder ) {
+                     finder.on( 'files:choose', function( evt ) {
+                         var file = evt.data.files.first();
+                         document.getElementById( 'xFilePath' ).value = file.getUrl();
+                     } );
+                     finder.on( 'file:choose:resizedImage', function( evt ) {
+                         document.getElementById( 'xFilePath' ).value = evt.data.resizedUrl;
+                     } );
+                 }
+             } );
+           }
+
   $(function () {
+    $('#thumbnail').click(function(){
+       openPopup();
+    });
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
