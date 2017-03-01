@@ -57,6 +57,35 @@ class AdminController extends Controller
         }
         
     }
+    public function chaptersAction()
+    {
+        if(isset($_GET['action']))
+        {
+            
+            if($_GET['action'] == 'allchapter')
+            {
+                return $this->listschapters();
+            }
+            else if($_GET['action'] == 'addchapter')
+            {
+                return view('admin/chapter/addchapter');
+            }
+            else if($_GET['action'] == 'editchapter')
+            {
+                if(isset($_GET['chapter_id']))
+                {
+                     return $this->editchapter($_GET['chapter_id']);
+                }
+               
+            }
+               
+        }
+        else
+        {
+            return $this->listchapters();
+        }
+        
+    }
     public function liststories()
     {
         $html = '';
@@ -95,5 +124,18 @@ class AdminController extends Controller
         );
 
         return view('admin/story/editstory')->with($data);
+    }
+
+    public function test()
+    {
+        $url = "http://theonlytutorials.com/wp-content/uploads/2015/06/blog-logo1.png";
+        $name = basename($url);
+        $uploadfile = $_SERVER['DOCUMENT_ROOT'] ."/truyenfull/upload/images/Thumbnail/$name";
+        $upload = file_put_contents($uploadfile,file_get_contents($url));
+        //check success
+        if($upload)
+            echo "Success: <a href='upload/".$name."' target='_blank'>Check Uploaded</a>"; 
+        else "please check your folder permission";
+
     }
 }

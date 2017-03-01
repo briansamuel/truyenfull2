@@ -60,7 +60,7 @@
                     </div>
                     <div class="box-footer">
                       <button type="submit" class="btn btn-default">Cancel</button>
-                      <button type="submit" class="btn btn-info pull-right">Thêm bài viết</button>
+                      <button type="submit" class="btn btn-info pull-right">Thêm truyện mới</button>
                     </div>
                   </div>
                
