@@ -96,6 +96,22 @@ class StoryController extends Controller
     {
         //
     }
-
+    public function AjaxListStory()
+    {   
+         $stories = new Stories;
+        if(isset($_GET['term']))
+        {
+            $term = $_GET['term'];
+            $all = $stories->AjaxListStory($term);
+            return array('total_count' => 4289641,'incomplete_results' => true,'items' => $all);
+            
+        }
+        else
+        {
+            $all = $stories::orderBy('story_title')->select('id','story_title')->get();
+            return array('total_count' => 4289641,'incomplete_results' => true,'items' => $all);
+        }
+        
+    }
     
 }

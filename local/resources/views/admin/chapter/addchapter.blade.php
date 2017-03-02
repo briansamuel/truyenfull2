@@ -28,6 +28,13 @@
                     <div class="box-body pad">
                       <input name="chapter_title" class="form-control input-lg" type="text" placeholder="Tiêu đề chapter">
                       <br>
+                      <div class="input-group" style="width: 100% !important">
+                        <!-- /btn-group -->
+                        <select class="js-data-example-ajax" style="width: 100% !important;padding:10px;">
+                          <option value="-1" selected="selected">Chapter thuộc truyện</option>
+                        </select>
+                      </div>
+                      <br>
                       <div class="input-group">
                         <div class="input-group-btn">
                           <button type="button" id="thumbnail" class="btn btn-info btn-flat">Số thứ tự Chap</button>
@@ -113,6 +120,8 @@
 
 @section('script')
 <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+
+<link rel="stylesheet" href="plugins/select2/select2.min.css">
 <!-- jQuery 2.2.3 -->
 <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -124,6 +133,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- CK Editor -->
+<script src="plugins/select2/select2.js"></script>
 
 <script src="plugins/ckeditor/ckeditor.js"></script>
 
@@ -132,7 +142,31 @@
 <script>
   $(function () {
 
-    
+    $(".js-data-example-ajax").select2({ 
+      width: 'resolve',
+      placeholder: 'Enter a tag',
+      ajax: {
+          
+          url: '{{ url("/admin/ajax/liststory") }}',
+          dataType: 'json',
+          delay: 400,
+          data: function(params) {
+              return {
+                  term: params.term,
+              }
+          },
+          processResults: function (data, page) {
+
+              return {
+                results: $.map(data.items, function(obj) {
+                    return { id: obj.id, text: obj.story_title };
+                })
+               
+              };
+          },
+          cache: true,
+      },
+    });
     $('#myModal').modal();
   });
 </script>
@@ -182,5 +216,6 @@
   #sublistCategorieshmtl {
     list-style-type: none;
   }
+  .select2-container .select2-selection--single {height:auto;}
 </style>
 @endsection

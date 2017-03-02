@@ -29,5 +29,6 @@ Route::get('/datatables/data','DatatablesController@listStoryData');
 // Ajax
 Route::post('/admin/ajax/getstory','AdminController@ajaxGetstory');
 Route::post('/admin/ajax/addstory','AdminController@ajaxAddstory');
+Route::get('/admin/ajax/liststory','StoryController@AjaxListStory');
 Route::get('/admin/test','AdminController@test');
 
