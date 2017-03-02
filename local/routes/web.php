@@ -25,8 +25,9 @@ Route::get('/admin/test','AdminController@test');
 Route::get('/admin/plugins/autostory',function () {
     return view('admin/plugins/autostory');
 });
+Route::get('/datatables/data','DatatablesController@listStoryData');
 // Ajax
 Route::post('/admin/ajax/getstory','AdminController@ajaxGetstory');
-
+Route::post('/admin/ajax/addstory','AdminController@ajaxAddstory');
 Route::get('/admin/test','AdminController@test');
 

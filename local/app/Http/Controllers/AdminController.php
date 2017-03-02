@@ -89,35 +89,7 @@ class AdminController extends Controller
         }
         
     }
-    public function chaptersAction()
-    {
-        if(isset($_GET['action']))
-        {
-            
-            if($_GET['action'] == 'allchapter')
-            {
-                return $this->listschapters();
-            }
-            else if($_GET['action'] == 'addchapter')
-            {
-                return view('admin/chapter/addchapter');
-            }
-            else if($_GET['action'] == 'editchapter')
-            {
-                if(isset($_GET['chapter_id']))
-                {
-                     return $this->editchapter($_GET['chapter_id']);
-                }
-               
-            }
-               
-        }
-        else
-        {
-            return $this->listchapters();
-        }
-        
-    }
+    
     public function liststories()
     {
         $html = '';
@@ -238,6 +210,7 @@ class AdminController extends Controller
         $stories->story_excerpt = $excerpt;
         $stories->story_keyword = $keywords;
         $stories->story_author = $author;
+
         $stories->story_thumbnail = $thumbnail;
         $stories->story_slug = str_slug($title);
         $result = $stories->save();
@@ -274,8 +247,7 @@ class AdminController extends Controller
     {
         include_once(app_path() . '\Libraries\simple_html_dom.php');
         $data = $request->all(); // This will get all the request data.
-        //$url = $data['url'];
-        $url = 'http://truyenfull.vn/the-loai/tien-hiep/trang-2/';
+        $url = $data['url'];
         $html = $this->CurlHTML($url);
         $html = str_get_html($html);
         $story_array_url = array();
@@ -283,7 +255,76 @@ class AdminController extends Controller
         foreach ($elements as $element)
             array_push($story_array_url, $element->href);
         echo json_encode($story_array_url);
+    }
+    public function ajaxAddstory(Request $request)
+    {   
+        include_once(app_path() . '\Libraries\simple_html_dom.php');
+        $data = $request->all(); // This will get all the request data.
+        $url = $data['url'];
+        $html_story = $this->CurlHTML($url);
+        $html_story = str_get_html($html_story);
+        $title = "";
+        $excerpt = "";
+        $keywords = "";
+        $author = "";
+        $thumbnail = "";
+        foreach($html_story->find('h3.title') as $element) {
 
+            $title = $element->innertext;
+            if (isset($title)) {
+                break;
+            }
+        }
+        foreach($html_story->find('meta[name=keywords]') as $element) {
+            $keywords = $element->content;
+            if (isset($keywords)) {
+                break;
+            }
+
+        }
+        foreach($html_story->find('.desc-text') as $element) {
+            $excerpt = $element->plaintext;
+            if (isset($excerpt)) {
+                break;
+            }
+        }
+        foreach($html_story->find('.info a[itemprop="author"]') as $element) {
+            $author = $element->innertext;
+            if (isset($author)) {
+                break;
+            }
+        }
+        foreach($html_story->find('.books img') as $element) {
+
+            $thumbnail = $element->src;
+            if (isset($thumbnail)) {
+                break;
+            }
+        }
+        $story_title_exist = DB::table('stories')->where('story_title', '=', $title)->first();
+        if (is_null($story_title_exist)) {
+            $thumbnail = $this->creatThumbbyUrl($thumbnail);
+            $this->AutoAddStory($title, $excerpt, $keywords, $author, $thumbnail);
+            // It does not exist - add to favorites button will show
+        } else {
+            echo 'Trùng lặp với ID '.$story_title_exist->id.'<br>';
+        }
+            
+    }
+    public function creatThumbbyUrl($url)
+    {
+        $name = basename($url);
+        $uploadfile = $_SERVER['DOCUMENT_ROOT'] ."/truyenfull/upload/images/Thumbnail/$name";
+        $upload = file_put_contents($uploadfile,file_get_contents($url));
+        if($upload)
+        {
+            return 'http://localhost/truyenfull/upload/images/Thumbnail/'.$name;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public function test_get_image()
     {
         $url = "http://theonlytutorials.com/wp-content/uploads/2015/06/blog-logo1.png";

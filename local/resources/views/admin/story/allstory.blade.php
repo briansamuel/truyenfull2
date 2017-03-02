@@ -24,17 +24,11 @@
                       <h3 class="box-title">Truyện mới nhất</h3>
 
                       <div class="box-tools">
-                          <div class="input-group input-group-sm" style="width: 150px;">
-                              <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                              <div class="input-group-btn">
-                                  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                              </div>
-                          </div>
+                          
                       </div>
                   </div>
                   <!-- /.box-header -->
-                  <div class="box-body table-responsive no-padding">
+                  <div class="box-body table-responsive">
                       <table id="dataTable" class="table table-hover">
                            <thead>
                               <tr>
@@ -44,13 +38,13 @@
                                   <th>ID</th>
                                   <th>Tiêu đề</th>
                                   <th>Tác giả</th>
-                                  <th>Categories</th>
+                                  <th>Ảnh đại diện</th>
                                   <th>Tags</th>
                                   <th>Ngày tạo</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {!!$articleshtml!!}
+                              
                             </tbody>
                       </table>
                   </div>
@@ -88,20 +82,32 @@
 <!-- DataTable -->
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
+$(function() {
+    $('#dataTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ url('datatables/data') }}",
+        columns: [
+            { data: 'id', render: function(data, type, row) {
+                  return '<input data-check="'+data+'" type="checkbox" name="remember">';
+              } },
+            { data: 'id', name: 'id' },
+            { data: 'story_title', name: 'story_title' },
+            { data: 'story_author', name: 'story_author' },
+            { data: 'story_author', name: 'story_author' },
+            { data: 'story_thumbnail', 
+              render: function(data, type, row) {
+                  return '<img width="100" src="'+data+'" />';
+              } },
+            { data: 'created_at', name: 'created_at' },
+            
+        ]
     });
-    var dataTable = $('#dataTable').DataTable(
-    {
-        "paging": true, // Allow data to be paged
-        "lengthChange": false,
-        "searching": false, // Search box and search function will be actived
-        "pageLength": 20,    // 5 rows per page
-
-    });
-  });
+});
 </script>
+<style type="text/css" media="screen">
+  #dataTable {
+  width: 100% !important;
+  }
+</style>
 @endsection

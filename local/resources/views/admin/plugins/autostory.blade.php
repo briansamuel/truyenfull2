@@ -131,34 +131,79 @@
           }
       });
   }
+  function addStoryAjax(url)
+  {
+    var token = $('#start-auto').data("token");
+    //console.log(url);
+    setTimeout(function() {
+      console.log(url);
+      $.ajax({
+
+              url: "admin/ajax/addstory",
+              type: 'POST',
+              dataType: "text",
+              data: {
+                  "url": url,
+                  "_token": token
+              },
+              success: function(response){ // What to do if we succeed
+                  console.log(response);
+                  $('#list-result').append(response+"<br>");
+              },
+              error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                  //console.log(JSON.stringify(jqXHR));
+                  //console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+              }
+          });
+     }, 5000);
+  }
+  function getListStoryAjax(lines,i)
+  {
+    var token = $('#start-auto').data("token");
+   
+    if (i < 0) return;
+    setTimeout(function() {
+        console.log('Start Auto + '+lines[i]);
+        $.ajax({
+
+            url: "admin/ajax/getstory",
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+                "url": lines[i],
+                "_token": token
+            },
+            success: function(response){ // What to do if we succeed
+               
+                for (var i = response.length - 1; i >= 0; i--) {
+                  addStoryAjax(response[i]);
+                    
+                 
+                  
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                //console.log(JSON.stringify(jqXHR));
+                //console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        });
+        console.log("Next Auto");
+        getListStoryAjax(lines,i-1);
+     }, 10000);
+  }
   $(function () {
+    
     $('#thumbnail').click(function(){
        openPopup();
     });
     $('#start-auto').click(function()
     {
       var token = $(this).data("token");
-      var url = 'ALO';
-      $.ajax(
-        {
-
-            url: "admin/ajax/getstory",
-            type: 'POST',
-            dataType: "JSON",
-            data: {
-                "url": url,
-                "_token": token
-            },
-            success: function(response){ // What to do if we succeed
-                for (var i = response.length - 1; i >= 0; i--) {
-                  console.log(response[i]);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                console.log(JSON.stringify(jqXHR));
-                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-            }
-        });
+      $('#list-result').html('');
+      var lines = $('#story_url').val().split('\n');
+      getListStoryAjax(lines,lines.length-1);
+      console.log('Start Auto');
+      
     });
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
