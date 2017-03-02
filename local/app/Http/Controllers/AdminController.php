@@ -96,4 +96,38 @@ class AdminController extends Controller
 
         return view('admin/story/editstory')->with($data);
     }
+    public function test_get()
+    {
+        include_once(app_path() . '\Libraries\simple_html_dom.php');
+        $html = $this->CurlHTML();
+        $html = str_get_html($html);
+        $elements = $html->find('h3.title');
+        foreach ($elements as $element) {
+            echo $element->innertext;
+        }
+
+    }
+    public function CurlHTML()
+    {
+        $c = curl_init('http://truyenfull.vn/nga-duc-phong-thien/trang-2');
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($c, CURLOPT_USERAGENT, "booyah!");
+        curl_setopt($c, CURLOPT_HEADER, 0);
+        curl_setopt($c,CURLOPT_FOLLOWLOCATION,true);
+        curl_setopt($c, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+        //curl_setopt(... other options you want...)
+        $html = curl_exec($c);
+        if(curl_exec($c) === false)
+        {
+            echo 'Curl error: ' . curl_error($c);
+        }
+        else
+        {
+            return $html;
+        }
+        // Get the status code
+        
+        curl_close($c);
+    }
 }
