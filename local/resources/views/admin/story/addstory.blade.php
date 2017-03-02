@@ -41,6 +41,7 @@
                       <br>
                       <div class="input-group">
                         <div class="input-group-btn">
+<<<<<<< HEAD
                           <button type="button" class="btn btn-info btn-flat">Tác giả</button>
                         </div>
                         <!-- /btn-group -->
@@ -52,6 +53,11 @@
                           <button type="button" id="thumbnail" class="btn btn-info btn-flat">Thumbnail</button>
                         </div>
                         <!-- /btn-group -->
+=======
+                          <button type="button" id="thumbnail" class="btn btn-info btn-flat">Thumbnail</button>
+                        </div>
+                        <!-- /btn-group -->
+>>>>>>> origin/master
                         <input  id="xFilePath" name="story_thumbnail" type="text" class="form-control">
                       </div>
                       <br>
@@ -149,6 +155,10 @@
 <script src="plugins/ckfinder/ckfinder.js"></script>
 <script>
   $(function () {
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     
     $('#myModal').modal();
   });
@@ -169,6 +179,10 @@
                  }
              } );
            }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
   $(function () {
     $('#thumbnail').click(function(){
        openPopup();
