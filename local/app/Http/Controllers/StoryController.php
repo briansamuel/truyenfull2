@@ -102,7 +102,8 @@ class StoryController extends Controller
         if($request->has('term'))
         {
             $term = $request->input('term');
-            $all = $stories->AjaxListStory($term);
+            $term = '%'.$term.'%';
+            $all = $stories::orderBy('story_title')->select('id','story_title')->where('story_title', 'like', $term)->get();
             return array('items' => $all);
             
         }

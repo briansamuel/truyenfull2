@@ -21,10 +21,5 @@ class Stories extends Model
     	$story = DB::table('stories')->where('id', $id)->get();
     	return $story;
     }
-    public function AjaxListStory($term)
-    {
-        $term = '%'.$term.'%';
-        $story = DB::table('stories')->where('story_title', 'like', $term)->get();
-        return $story;
-    }
+
 }
