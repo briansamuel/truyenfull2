@@ -118,19 +118,19 @@
 <script src="plugins/iCheck/icheck.min.js"></script>
 <script type="text/javascript" >
   function openPopup() {
-             CKFinder.popup( {
-                 chooseFiles: true,
-                 onInit: function( finder ) {
-                     finder.on( 'files:choose', function( evt ) {
-                         var file = evt.data.files.first();
-                         document.getElementById( 'xFilePath' ).value = file.getUrl();
-                     } );
-                     finder.on( 'file:choose:resizedImage', function( evt ) {
-                         document.getElementById( 'xFilePath' ).value = evt.data.resizedUrl;
-                     } );
-                 }
-             } );
-           }
+      CKFinder.popup({
+          chooseFiles: true,
+          onInit: function(finder) {
+              finder.on('files:choose', function(evt) {
+                  var file = evt.data.files.first();
+                  document.getElementById('xFilePath').value = file.getUrl();
+              });
+              finder.on('file:choose:resizedImage', function(evt) {
+                  document.getElementById('xFilePath').value = evt.data.resizedUrl;
+              });
+          }
+      });
+  }
   $(function () {
     $('#thumbnail').click(function(){
        openPopup();
