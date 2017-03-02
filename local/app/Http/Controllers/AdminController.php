@@ -157,7 +157,7 @@ class AdminController extends Controller
 
         return view('admin/story/editstory')->with($data);
     }
-<<<<<<< HEAD
+
     public function test()
     {
         include_once(app_path() . '\Libraries\simple_html_dom.php');
@@ -283,9 +283,8 @@ class AdminController extends Controller
         foreach ($elements as $element)
             array_push($story_array_url, $element->href);
         echo json_encode($story_array_url);
-=======
 
-    public function test()
+    public function test_get_image()
     {
         $url = "http://theonlytutorials.com/wp-content/uploads/2015/06/blog-logo1.png";
         $name = basename($url);
@@ -296,6 +295,6 @@ class AdminController extends Controller
             echo "Success: <a href='upload/".$name."' target='_blank'>Check Uploaded</a>"; 
         else "please check your folder permission";
 
->>>>>>> origin/master
+
     }
 }
