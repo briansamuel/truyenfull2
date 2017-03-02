@@ -21,3 +21,8 @@ Route::get('/admin/story','AdminController@storiesAction');
 Route::get('/admin/chapter','AdminController@chaptersAction');
 Route::post('/admin/story','StoryController@store');
 Route::get('/admin/test','AdminController@test');
+Route::get('/admin/plugins/autostory',function () {
+    return view('admin/plugins/autostory');
+});
+// Ajax
+Route::post('/admin/ajax/getstory','AdminController@ajaxGetstory');

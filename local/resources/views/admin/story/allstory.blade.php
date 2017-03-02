@@ -21,7 +21,7 @@
             <div class="col-xs-12">
               <div class="box">
                   <div class="box-header">
-                      <h3 class="box-title">Bài viết mới nhất</h3>
+                      <h3 class="box-title">Truyện mới nhất</h3>
 
                       <div class="box-tools">
                           <div class="input-group input-group-sm" style="width: 150px;">
@@ -98,8 +98,8 @@
     {
         "paging": true, // Allow data to be paged
         "lengthChange": false,
-        "searching": true, // Search box and search function will be actived
-        "pageLength": 5,    // 5 rows per page
+        "searching": false, // Search box and search function will be actived
+        "pageLength": 20,    // 5 rows per page
 
     });
   });

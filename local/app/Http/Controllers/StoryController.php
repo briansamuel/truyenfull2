@@ -42,6 +42,7 @@ class StoryController extends Controller
         $stories->story_title = $dulieu_tu_input['story_title'];
         $stories->story_excerpt = $dulieu_tu_input['story_excerpt'];
         $stories->story_keyword = $dulieu_tu_input['story_keyword'];
+        $stories->story_author = $dulieu_tu_input['story_author'];
         $stories->story_thumbnail = $dulieu_tu_input['story_thumbnail'];
         $stories->story_slug = str_slug($dulieu_tu_input['story_title']);
         $stories->save();
