@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Stories;
 use App\Terms;
+use App\Libraries\simplet;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
