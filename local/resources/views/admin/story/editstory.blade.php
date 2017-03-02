@@ -40,10 +40,10 @@
                       <br>
                       <div class="input-group">
                         <div class="input-group-btn">
-                          <button type="button" class="btn btn-info btn-flat">Thumbnail</button>
+                          <button id="thumbnail" type="button" class="btn btn-info btn-flat">Thumbnail</button>
                         </div>
                         <!-- /btn-group -->
-                        <input name="story_thumbnail" type="text" class="form-control" value="{{$story->story_thumbnail}}">
+                        <input id="xFilePath" name="story_thumbnail" type="text" class="form-control" value="{{$story->story_thumbnail}}">
                       </div>
                       <br>
                       <div class="input-group">
@@ -134,9 +134,8 @@
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<!-- CK Editor -->
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- CK Finder-->
+<script src="plugins/ckfinder/ckfinder.js"></script>
 <script>
   $(function () {
 
@@ -144,8 +143,26 @@
   });
 </script>
 <script src="plugins/iCheck/icheck.min.js"></script>
-<script>
+<script type="text/javascript" >
+  function openPopup() {
+             CKFinder.popup( {
+                 chooseFiles: true,
+                 onInit: function( finder ) {
+                     finder.on( 'files:choose', function( evt ) {
+                         var file = evt.data.files.first();
+                         document.getElementById( 'xFilePath' ).value = file.getUrl();
+                     } );
+                     finder.on( 'file:choose:resizedImage', function( evt ) {
+                         document.getElementById( 'xFilePath' ).value = evt.data.resizedUrl;
+                     } );
+                 }
+             } );
+           }
+
   $(function () {
+    $('#thumbnail').click(function(){
+       openPopup();
+    });
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
