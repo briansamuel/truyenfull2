@@ -19,6 +19,7 @@ class CreateTermsTable extends Migration
             $table->integer('term_parent')->default(0);
             $table->text('term_keyword');
             $table->text('term_description');
+            $table->string('term_slug');
             $table->string('term_type')->default('category');
         });
     }

@@ -49,7 +49,7 @@
                 <li><a href="admin/story?action=addstory"><i class="fa fa-circle-o"></i>Thêm truyện</a></li>
                 <li><a href="admin/chapter?action=allchapter"><i class="fa fa-circle-o"></i>Danh sách chương</a></li>
                 <li><a href="admin/chapter?action=addchapter"><i class="fa fa-circle-o"></i>Thêm chương</a></li>
-                <li><a href="admin/categoy?action=addcategory"><i class="fa fa-circle-o"></i>Thêm danh mục</a></li>
+                <li><a href="admin/category?action=addcategory"><i class="fa fa-circle-o"></i>Thêm danh mục</a></li>
             </ul>
         </li>
         <li>

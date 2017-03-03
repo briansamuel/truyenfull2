@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use DB;
 use App\Stories;
 use App\Terms;
-use App\Libraries\simplet;
 use Illuminate\Http\Request;
 use App\Http\Requests\CheckStoryRequest;
 class AdminController extends Controller
@@ -90,6 +89,37 @@ class AdminController extends Controller
         
     }
     
+    public function categoriesAction()
+    {
+        if(isset($_GET['action']))
+        {
+            
+            if($_GET['action'] == 'allstory')
+            {
+                return $this->liststories();
+            }
+            else if($_GET['action'] == 'addcategory')
+            {
+                $categories = Terms::orderBy('term_id', 'desc')->get();
+                return  view('admin/term/addcategory')->with('categories',$categories);
+            }
+            else if($_GET['action'] == 'editstory')
+            {
+                if(isset($_GET['story_id']))
+                {
+                     return $this->editstory($_GET['story_id']);
+                }
+               
+            }
+               
+        }
+        else
+        {
+            return $this->liststories();
+        }
+        
+    }
+
     public function liststories()
     {
         $html = '';

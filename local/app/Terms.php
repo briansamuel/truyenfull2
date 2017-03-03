@@ -13,7 +13,7 @@ class Terms extends Model
         
        	
     ];
-
+    public $timestamps = false;
     public static function AllCategoriesHTML()
     {
         $html = '<ul id="listCategorieshmtl">';
