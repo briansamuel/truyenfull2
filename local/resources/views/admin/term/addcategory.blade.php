@@ -119,6 +119,7 @@
     //CKEDITOR.replace('editor1');
     //bootstrap WYSIHTML5 - text editor
     //$(".textarea").wysihtml5();
+    // Test
     $('#myModal').modal();
   });
 </script>
