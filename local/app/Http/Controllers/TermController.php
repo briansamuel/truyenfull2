@@ -83,7 +83,7 @@ class TermController extends Controller
     {
         //
     }
-
+    // Thêm Category Controller
     public function addcategory(CheckTermRequest $request)
     {
         $dulieu_tu_input = $request->all();
